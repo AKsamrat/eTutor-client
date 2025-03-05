@@ -16,12 +16,16 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
   const form = useForm({
     defaultValues: {
       name: tutor?.name || "",
-      email: tutor?.email || "",
+      // email: tutor?.email || "",
       bio: tutor?.bio || "",
       pic: tutor?.pic || "",
       hourlyRate: tutor?.hourlyRate || "",
+      institute: tutor?.institute || "",
+      location: tutor?.location || "",
       availability: tutor?.availability || "",
       subject: tutor?.subject || "",
+      preferredClass: tutor?.preferredClass || "",
+      preferredArea: tutor?.preferredArea || "",
 
     }
   })
@@ -30,9 +34,7 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-
-    // console.log({ availableColors, keyFeatures, specification });
-
+    console.log(data)
     const modifiedData = {
       ...data,
 
@@ -40,13 +42,13 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(modifiedData));
-
+    console.log(formData)
     try {
-      const res = await updateProfile(formData, tutor?._id as string);
+      const res = await updateProfile(data, tutor?._id as string);
 
       if (res.success) {
         toast.success(res.message);
-        router.push("/user/shop/products");
+        router.push("/tutor/manageProfile");
       } else {
         toast.error(res.message);
       }
@@ -55,7 +57,7 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
     }
   };
   return (
-    <div>
+    <div className="px-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex justify-between items-center border-t border-b py-3 my-5">
@@ -77,12 +79,38 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
             />
 
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value || ""} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+            <FormField
+              control={form.control}
+              name="institute"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Institute</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value || ""} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
                   <FormControl>
                     <Input {...field} value={field.value || ""} />
                   </FormControl>
@@ -151,6 +179,40 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Biodata</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="h-36 resize-none"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="preferredClass"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Preferred Class</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="h-36 resize-none"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="preferredArea"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Preferred Area</FormLabel>
                   <FormControl>
                     <Textarea
                       className="h-36 resize-none"
