@@ -47,7 +47,7 @@ const TestimonialSlider = () => {
           spaceBetween={30}
           slidesPerView={2} // Shows 2 slides at a time
           autoplay={{ delay: 3000 }}
-          navigation
+
           loop
           dir="rtl" // Enables right-to-left sliding
           breakpoints={{
