@@ -3,9 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { MapPin, Star } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface TutorDetailsProps {
   tutor: {
+    email: string;
     name: string;
     bio: string;
     hourlyRate: number;
@@ -22,6 +24,7 @@ interface TutorDetailsProps {
 }
 
 const TutorDetails: React.FC<TutorDetailsProps> = ({ tutor }) => {
+  const router = useRouter()
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 md:p-10">
       {/* Header Section */}
@@ -67,8 +70,8 @@ const TutorDetails: React.FC<TutorDetailsProps> = ({ tutor }) => {
         <Button className="w-full md:w-1/2 bg-blue-600 hover:bg-blue-700 text-white">
           📞 Contact
         </Button>
-        <Button className="w-full md:w-1/2 bg-green-600 hover:bg-green-700 text-white">
-          📅 Book Now
+        <Button onClick={() => router.push(`/tutors/booking/${tutor?.email}`)} className="w-full md:w-1/2 bg-green-600 hover:bg-green-700 text-white">
+          📅 Booking Request
         </Button>
       </div>
     </div>

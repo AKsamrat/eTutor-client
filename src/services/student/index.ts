@@ -36,3 +36,17 @@ export const updateStudentProfile = async (data: ITutor, id: string) => {
 
   return res.json();
 };
+export const createBooking = async (data: ITutor) => {
+  console.log("with data:", data);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/booking`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: (await cookies()).get("accessToken")?.value || "",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return res.json();
+};

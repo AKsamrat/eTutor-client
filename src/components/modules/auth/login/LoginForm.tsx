@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
-import Logo from "@/app/assets/svgs/Logo";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser, reCaptchaTokenVerification } from "@/services/AuthService";
 import { toast } from "sonner";
@@ -21,7 +21,8 @@ import { loginSchema } from "./loginValidation";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-
+import Image from "next/image";
+import logo2 from '../../../../app/assets/etutor_logo2.png'
 export default function LoginForm() {
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -70,7 +71,12 @@ export default function LoginForm() {
   return (
     <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
       <div className="flex items-center space-x-4 ">
-        <Logo />
+        <Image
+          src={logo2}
+          alt='etutor'
+          width={52}
+          height={52}
+        />
         <div>
           <h1 className="text-xl font-semibold">Login</h1>
           <p className="font-extralight text-sm text-gray-600">Welcome back!</p>
