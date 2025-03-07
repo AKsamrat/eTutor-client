@@ -1,6 +1,7 @@
 "use server";
 
 import { ITutor } from "@/types/tutor";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const getSingleTutor = async (email: string) => {
@@ -33,6 +34,7 @@ export const updateProfile = async (data: ITutor, id: string) => {
     },
     body: JSON.stringify(data), // ✅ Ensure data is stringified
   });
+  revalidateTag("TUTOR");
 
   return res.json();
 };
@@ -68,4 +70,33 @@ export const getAllTutor = async (page?: string, limit?: string, query?: { [key:
   } catch (error: any) {
     return Error(error.message);
   }
+};
+
+export const approveRequest = async (id: string) => {
+  console.log("Sending update for ID:", id);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/booking/approve/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json", // ✅ Ensure Content-Type is set
+      Authorization: (await cookies()).get("accessToken")?.value || "",
+    },
+    // ✅ Ensure data is stringified
+  });
+  revalidateTag("BOOKING");
+  return res.json();
+};
+export const cancelRequest = async (id: string) => {
+  console.log("Sending update for ID:", id);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/booking/cancel/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json", // ✅ Ensure Content-Type is set
+      Authorization: (await cookies()).get("accessToken")?.value || "",
+    },
+    // ✅ Ensure data is stringified
+  });
+  revalidateTag("BOOKING");
+  return res.json();
 };

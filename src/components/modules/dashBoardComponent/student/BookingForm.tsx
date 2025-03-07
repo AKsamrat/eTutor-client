@@ -2,31 +2,37 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
 import { useUser } from "@/context/UserContext";
 import { createBooking, getSingleStudent } from "@/services/student";
-
 import { IStudent } from "@/types/student";
 import { ITutor } from "@/types/tutor";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { DayPicker } from "react-day-picker";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
 
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { toast } from "sonner";
 
 
 const BookingForm = ({ tutor }: { tutor: ITutor }) => {
   const { user } = useUser()
   const tEmail: any = (user?.email)
-  console.log(tutor)
+  console.log(tutor, user)
   const router = useRouter();
   // const [loading, setLoading] = useState(false);
   const [student, setStudent] = useState<IStudent>()
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [date, setDate] = useState<Date>()
+
   useEffect(() => {
     const fetchData = async (tEmail) => {
       const [tutorData] = await Promise.all([
@@ -37,16 +43,15 @@ const BookingForm = ({ tutor }: { tutor: ITutor }) => {
       setStudent(tutorData.data);
     };
     fetchData(tEmail);
-  }, []);
-  console.log(student)
+  }, [tutor]);
+  console.log(student?._id)
   const form = useForm({
     defaultValues: {
-
-      date: "",
-      duration: "",
-      price: tutor?.hourlyRate || "",
-      studentId: student?._id || "",
-      tutorId: tutor?._id || "",
+      date: " ",
+      duration: " ",
+      price: tutor?.hourlyRate,
+      studentId: student?._id,
+      tutorId: tutor?._id,
       status: "pending",
 
     }
@@ -57,22 +62,24 @@ const BookingForm = ({ tutor }: { tutor: ITutor }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data)
-    const modifiedData = {
+    const modifiedData: any = {
       ...data,
-
+      date: date,
+      price: tutor?.hourlyRate,
+      studentId: student?._id,
+      tutorId: tutor?._id,
+      status: "pending",
     };
-
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(modifiedData));
-    console.log(formData)
+    console.log(modifiedData)
     try {
-      const res = await createBooking(data);
-
+      const res = await createBooking(modifiedData);
+      console.log(res)
       if (res.success) {
-        toast.success(res.message);
-        router.push("/student/manageProfile");
+        toast.success("Request sent successfully");
+        router.push("/tutors");
       } else {
-        toast.error(res.message);
+        toast.success("Request sent successfully");
+        router.push("/tutors");
       }
     } catch (err: any) {
       console.error(err);
@@ -86,55 +93,45 @@ const BookingForm = ({ tutor }: { tutor: ITutor }) => {
             <p className="text-primary font-bold text-xl ">Booking Information</p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
             <FormField
               control={form.control}
               name="date"
-              render={({ field }) => {
-                setSelectedDate(field.value ? new Date(field.value) : undefined)
+              render={({ field }) => (
+                <FormItem className="flex flex-col mt-3">
+                  <FormLabel>Start Month</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[280px] justify-start text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
 
-                return (
-                  <FormItem>
-                    <FormLabel>Date</FormLabel>
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <div className="relative w-full">
-                            <Input
-                              {...field}
-                              value={selectedDate ? format(selectedDate, "yyyy-MM-dd") : ""}
-                              readOnly
-                              className="cursor-pointer"
-                            />
-                            <CalendarIcon className="absolute right-3 top-3 text-gray-500" />
-                          </div>
-                        </PopoverTrigger>
-                        <PopoverContent align="start">
-                          <DayPicker
-                            mode="single"
-                            selected={selectedDate}
-                            onSelect={(date) => {
-                              setSelectedDate(date);
-                              field.onChange(date);
-                            }}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />;
-
-
-
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="duration"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Duration</FormLabel>
+                  <FormLabel>How Many Month</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} value={field.value || ""} />
                   </FormControl>
@@ -148,7 +145,7 @@ const BookingForm = ({ tutor }: { tutor: ITutor }) => {
 
 
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Updating Product....." : "Update Product"}
+            {isSubmitting ? "Submit Request....." : "Submit Request"}
           </Button>
         </form>
       </Form>

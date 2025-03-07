@@ -1,11 +1,12 @@
+import Brequest from "@/components/modules/dashBoardComponent/tutor/Brequest";
 
 
-const BookingPage = () => {
+const BookingRequest = () => {
   return (
     <div>
-      booking
+      <Brequest></Brequest>
     </div>
   );
 };
 
-export default BookingPage;
+export default BookingRequest;

@@ -1,6 +1,8 @@
 "use server";
 
+import { IBooking } from "@/types/booking";
 import { ITutor } from "@/types/tutor";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const getSingleStudent = async (email: string) => {
@@ -11,6 +13,24 @@ export const getSingleStudent = async (email: string) => {
       {
         next: {
           tags: ["STUDENT"],
+        },
+      }
+    );
+    const data = await res.json();
+    // console.log(data)
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+export const getRequestForTutor = async (id: string) => {
+  // console.log(email)
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/booking/${id}`,
+      {
+        next: {
+          tags: ["BOOKING"],
         },
       }
     );
@@ -36,7 +56,7 @@ export const updateStudentProfile = async (data: ITutor, id: string) => {
 
   return res.json();
 };
-export const createBooking = async (data: ITutor) => {
+export const createBooking = async (data: IBooking) => {
   console.log("with data:", data);
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/booking`, {
@@ -47,6 +67,6 @@ export const createBooking = async (data: ITutor) => {
     },
     body: JSON.stringify(data),
   });
-
+  revalidateTag("BOOKING");
   return res.json();
 };
