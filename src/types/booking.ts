@@ -1,4 +1,5 @@
 import { IStudent } from "./student";
+import { ITutor } from "./tutor";
 
 export interface IBooking {
   _id: string;
@@ -6,8 +7,9 @@ export interface IBooking {
   duration: string;
   price: number;
   studentId: IStudent;
-  tutorId: string;
+  tutorId: ITutor;
   status: "pending" | "completed" | "canceled";
   createdAt: Date;
   updatedAt: Date;
+  orderQuantity?: number;
 }

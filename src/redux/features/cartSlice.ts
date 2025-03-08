@@ -5,32 +5,34 @@ import { addCoupon } from "@/services/cart";
 
 export interface CartProduct extends IProduct {
   orderQuantity: number;
+  duration: number;
+  tutorId: string;
 }
 
 interface InitialState {
   products: CartProduct[];
-  city: string;
-  shippingAddress: string;
-  shopId: string;
-  coupon: {
-    code: string;
-    discountAmount: number;
-    isLoading: boolean;
-    error: string;
-  };
+  // city: string;
+  // shippingAddress: string;
+  // shopId: string;
+  // coupon: {
+  //   code: string;
+  //   discountAmount: number;
+  //   isLoading: boolean;
+  //   error: string;
+  // };
 }
 
 const initialState: InitialState = {
   products: [],
-  city: "",
-  shippingAddress: "",
-  shopId: "",
-  coupon: {
-    code: "",
-    discountAmount: 0,
-    isLoading: false,
-    error: "",
-  },
+  // city: "",
+  // shippingAddress: "",
+  // shopId: "",
+  // coupon: {
+  //   code: "",
+  //   discountAmount: 0,
+  //   isLoading: false,
+  //   error: "",
+  // },
 };
 
 export const fetchCoupon = createAsyncThunk(
@@ -64,9 +66,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
-      if (state.products.length === 0) {
-        state.shopId = action.payload.shop._id;
-      }
 
       const productToAdd = state.products.find(
         (product) => product._id === action.payload._id
@@ -104,36 +103,13 @@ const cartSlice = createSlice({
         (product) => product._id !== action.payload
       );
     },
-    updateCity: (state, action) => {
-      state.city = action.payload;
-    },
-    updateShippingAddress: (state, action) => {
-      state.shippingAddress = action.payload;
-    },
+
     clearCart: (state) => {
       state.products = [];
-      state.city = "";
-      state.shippingAddress = "";
+
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchCoupon.pending, (state) => {
-      state.coupon.isLoading = true;
-      state.coupon.error = "";
-    });
-    builder.addCase(fetchCoupon.rejected, (state, action) => {
-      state.coupon.isLoading = false;
-      state.coupon.error = action.error.message as string;
-      state.coupon.code = "";
-      state.coupon.discountAmount = 0;
-    });
-    builder.addCase(fetchCoupon.fulfilled, (state, action) => {
-      state.coupon.isLoading = false;
-      state.coupon.error = "";
-      state.coupon.code = action.payload.data.coupon.code;
-      state.coupon.discountAmount = action.payload.data.discountAmount;
-    });
-  },
+
 });
 
 //* Products 01916456963
@@ -144,19 +120,31 @@ export const orderedProductsSelector = (state: RootState) => {
 
 export const orderSelector = (state: RootState) => {
   return {
-    products: state.cart.products.map((product) => ({
+    products: state.cart.products.map((product: any) => ({
       product: product._id,
       quantity: product.orderQuantity,
       color: "White",
+      tutor: product?.tutorId?._id,
+      // finalAmount: product.price * product.orderQuantity * product.duration,
+      // totalAmount: product.price * product.orderQuantity * product.duration,
     })),
-    shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
+
+
+    totalAmount: state.cart.products.reduce(
+      (total, product) => total + product.price * product.orderQuantity * product.duration,
+      0
+    ),
+
+    finalAmount: state.cart.products.reduce(
+      (total, product) => total + product.price * product.orderQuantity * product.duration,
+      0
+    ),
+
     paymentMethod: "Online",
   };
 };
 
-export const shopSelector = (state: RootState) => {
-  return state.cart.shopId;
-};
+
 
 //* Payment
 
@@ -165,62 +153,25 @@ export const subTotalSelector = (state: RootState) => {
     if (product.offerPrice) {
       return acc + product.offerPrice * product.orderQuantity;
     } else {
-      return acc + product.price * product.orderQuantity;
+      return acc + product.price * product.orderQuantity * product.duration;
     }
   }, 0);
 };
 
-export const shippingCostSelector = (state: RootState) => {
-  if (
-    state.cart.city &&
-    state.cart.city === "Dhaka" &&
-    state.cart.products.length > 0
-  ) {
-    return 60;
-  } else if (
-    state.cart.city &&
-    state.cart.city !== "Dhaka" &&
-    state.cart.products.length > 0
-  ) {
-    return 120;
-  } else {
-    return 0;
-  }
-};
+
 
 export const grandTotalSelector = (state: RootState) => {
   const subTotal = subTotalSelector(state);
-  const shippingCost = shippingCostSelector(state);
-  const discountAmount = discountAmountSelector(state);
 
-  return subTotal - discountAmount + shippingCost;
+  return subTotal;
 };
 
-export const couponSelector = (state: RootState) => {
-  return state.cart.coupon;
-};
-
-export const discountAmountSelector = (state: RootState) => {
-  return state.cart.coupon.discountAmount;
-};
-
-//* Address
-
-export const citySelector = (state: RootState) => {
-  return state.cart.city;
-};
-
-export const shippingAddressSelector = (state: RootState) => {
-  return state.cart.shippingAddress;
-};
 
 export const {
   addProduct,
   incrementOrderQuantity,
   decrementOrderQuantity,
   removeProduct,
-  updateCity,
-  updateShippingAddress,
   clearCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

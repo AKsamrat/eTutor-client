@@ -3,7 +3,7 @@
 import * as React from "react"
 import {
   Bot,
-  DollarSign,
+
   Settings2,
   SquareTerminal,
 } from "lucide-react"
@@ -39,7 +39,7 @@ const data = {
     },
     {
       title: "Student",
-      url: "/student",
+      url: "/student/manageProfile",
       icon: Bot,
       items: [
         {
@@ -51,28 +51,21 @@ const data = {
           url: "/student/pastBooking",
         },
         {
+          title: "Review Tutor",
+          url: "/student/reviewTutor",
+        },
+        {
+          title: "Payment",
+          url: "/student/payment",
+        },
+        {
           title: "Payment History",
           url: "/student/paymentHistory",
         },
-        {
-          title: "Review Tutor",
-          url: "/user/reviewTutor",
-        },
       ],
     },
 
-    {
-      title: "Checkout",
-      url: "/checkout",
-      icon: DollarSign,
-      items: [
-        {
-          title: "Payment",
-          url: "/payment",
-        },
 
-      ],
-    },
   ],
   navTutor: [
     {
@@ -83,7 +76,7 @@ const data = {
     },
     {
       title: "Tutor",
-      url: "/tutor",
+      url: "/tutor/manageProfile",
       icon: Bot,
       items: [
         {

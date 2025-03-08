@@ -18,8 +18,8 @@ const SuccessPage = () => {
             successfully.
           </p>
 
-          <Link href="/products" legacyBehavior>
-            <Button>Continue Shopping</Button>
+          <Link href="/tutors" legacyBehavior>
+            <Button>Continue Browsing</Button>
           </Link>
         </div>
       </div>
