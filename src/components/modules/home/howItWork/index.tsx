@@ -1,5 +1,7 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { FaUserPlus, FaSuitcase, FaCar, FaMoneyBillWave } from "react-icons/fa";
 
 const steps = [
@@ -91,6 +93,11 @@ const HowItWorks = () => {
           </div>
         ))}
 
+      </div>
+      <div className="mt-10">
+        <Link href="/register" className="">
+          <Button>Register As Tutor</Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,9 +1,13 @@
+import MyEarning from "@/components/modules/dashBoardComponent/tutor/MyEarning";
 
 
 const EarningPage = () => {
   return (
     <div>
-      earning
+      <div>
+        <h1 className="text-3xl font-bold text-center">---My Earing---</h1>
+      </div>
+      <MyEarning></MyEarning>
     </div>
   );
 };

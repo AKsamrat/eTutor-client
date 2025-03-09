@@ -1,10 +1,10 @@
 
 import FilterSidebar from "./FilterSidebar";
-import { ITutor } from "@/types/tutor";
+// import { ITutor } from "@/types/tutor";
 import TutorCard from "./Tutorcard";
 
 
-const AllTutors = ({ tutors }: { tutors: ITutor[] }) => {
+const AllTutors = ({ tutors }: any) => {
   console.log(tutors)
   return (
     <div className="flex gap-8 my-10">
@@ -13,7 +13,7 @@ const AllTutors = ({ tutors }: { tutors: ITutor[] }) => {
       </div>
       <div>
         <div className="grid grid-cols-3 gap-8">
-          {tutors?.result?.map((tutor: ITutor, idx: number) => (
+          {tutors?.result?.map((tutor: any, idx: number) => (
             <TutorCard key={idx} tutor={tutor} />
           ))}
         </div>

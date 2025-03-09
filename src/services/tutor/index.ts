@@ -100,3 +100,21 @@ export const cancelRequest = async (id: string) => {
   revalidateTag("BOOKING");
   return res.json();
 };
+export const getMyEarn = async (tutorId: string) => {
+  console.log(tutorId)
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/order/${tutorId}`,
+      {
+        next: {
+          tags: ["STUDENT"],
+        },
+      }
+    );
+    const data = await res.json();
+    // console.log(data)
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};

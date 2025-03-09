@@ -1,9 +1,13 @@
+import PaymentHistory from "@/components/modules/dashBoardComponent/student/PaymentHistory";
 
 
 const PaymentHistoryPage = () => {
   return (
     <div>
-      payment history
+      <div>
+        <h1 className="text-3xl font-bold text-center">---Payment History---</h1>
+      </div>
+      <PaymentHistory></PaymentHistory>
     </div>
   );
 };

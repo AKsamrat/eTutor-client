@@ -4,7 +4,7 @@ import * as React from "react"
 import {
   Bot,
 
-  Settings2,
+
   SquareTerminal,
 } from "lucide-react"
 
@@ -51,16 +51,16 @@ const data = {
           url: "/student/pastBooking",
         },
         {
-          title: "Review Tutor",
-          url: "/student/reviewTutor",
-        },
-        {
-          title: "Payment",
+          title: "Check Out",
           url: "/student/payment",
         },
         {
           title: "Payment History",
           url: "/student/paymentHistory",
+        },
+        {
+          title: "Review Tutor",
+          url: "/student/reviewTutor",
         },
       ],
     },
@@ -70,7 +70,7 @@ const data = {
   navTutor: [
     {
       title: "Dashboard",
-      url: "/student/dashboard",
+      url: "/tutor/dashboard",
       icon: SquareTerminal,
       isActive: true,
     },
@@ -98,18 +98,7 @@ const data = {
       ],
     },
 
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "Profile",
-          url: "/profile",
-        },
 
-      ],
-    },
   ],
 
 }
