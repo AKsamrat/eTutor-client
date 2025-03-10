@@ -1,5 +1,5 @@
 import ReviewForm from "@/components/modules/dashBoardComponent/student/ReviewForm";
-import { getSingleTutor } from "@/services/tutor";
+import { getSingleTutorById } from "@/services/tutor";
 
 
 const reviewTutor = async ({
@@ -8,8 +8,8 @@ const reviewTutor = async ({
   params: Promise<{ tutorId: string }>;
 }) => {
   const { tutorId }: { tutorId: string } = await params;
-  const { data: tutor } = await getSingleTutor(tutorId);
-  console.log(tutor);
+  const { data: tutor } = await getSingleTutorById(tutorId);
+  console.log(tutorId, tutor);
 
   return (
     <div>

@@ -2,25 +2,14 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@/context/UserContext";
-import { createBooking, getSingleStudent } from "@/services/student";
+import { createReview, getSingleStudent } from "@/services/student";
 import { IStudent } from "@/types/student";
 import { ITutor } from "@/types/tutor";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { toast } from "sonner";
 
 
@@ -31,7 +20,7 @@ const ReviewForm = ({ tutor }: { tutor: ITutor }) => {
   const router = useRouter();
   // const [loading, setLoading] = useState(false);
   const [student, setStudent] = useState<IStudent>()
-  const [date, setDate] = useState<Date>()
+
 
   useEffect(() => {
     const fetchData = async (tEmail) => {
@@ -47,13 +36,10 @@ const ReviewForm = ({ tutor }: { tutor: ITutor }) => {
   console.log(student?._id)
   const form = useForm({
     defaultValues: {
-      date: " ",
-      duration: " ",
-      price: tutor?.hourlyRate,
-      studentId: student?._id,
-      tutorId: tutor?._id,
-      status: "pending",
-
+      review: " ",
+      rating: " ",
+      student: student?._id,
+      tutor: tutor?._id,
     }
   })
   const {
@@ -64,22 +50,20 @@ const ReviewForm = ({ tutor }: { tutor: ITutor }) => {
     console.log(data)
     const modifiedData: any = {
       ...data,
-      date: date,
-      price: tutor?.hourlyRate,
-      studentId: student?._id,
-      tutorId: tutor?._id,
-      status: "pending",
+      student: student?._id,
+      tutor: tutor?._id,
+
     };
     console.log(modifiedData)
     try {
-      const res = await createBooking(modifiedData);
+      const res = await createReview(modifiedData);
       console.log(res)
       if (res.success) {
         toast.success("Request sent successfully");
-        router.push("/tutors");
+        router.push(`/student/reviewTutor/${student?._id}`);
       } else {
-        toast.success("Request sent successfully");
-        router.push("/tutors");
+        toast.error(res.message);
+        // router.push("/tutors");
       }
     } catch (err: any) {
       console.error(err);
@@ -93,45 +77,13 @@ const ReviewForm = ({ tutor }: { tutor: ITutor }) => {
             <p className="text-primary font-bold text-xl ">Booking Information</p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col mt-3">
-                  <FormLabel>Start Month</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[280px] justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
-              name="duration"
+              name="rating"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>How Many Month</FormLabel>
+                  <FormLabel>Rating(1-5)</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} value={field.value || ""} />
                   </FormControl>
@@ -140,6 +92,25 @@ const ReviewForm = ({ tutor }: { tutor: ITutor }) => {
               )}
             />
 
+          </div>
+          <div className="my-5">
+            <FormField
+              control={form.control}
+              name="review"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>review</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="h-36 resize-none"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
 

@@ -22,6 +22,24 @@ export const getSingleTutor = async (email: string) => {
     return Error(error.message);
   }
 };
+export const getSingleTutorById = async (tutorId: string) => {
+  console.log("tutor", tutorId)
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/tutors/review/${tutorId}`,
+      {
+        next: {
+          tags: ["TUTOR"],
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data)
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
 
 export const updateProfile = async (data: ITutor, id: string) => {
   console.log("Sending update for ID:", id, "with data:", data);

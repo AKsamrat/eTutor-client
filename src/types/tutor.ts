@@ -11,6 +11,8 @@ export interface ITutor {
   location?: string;
   hourlyRate?: number;
   name?: string;
+  averageRating?: number;
+  ratingCount?: number;
   review?: number;
   lastLogin?: Date;
   availability?: string;
