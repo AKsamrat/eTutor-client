@@ -11,7 +11,7 @@ import { ITutor } from "@/types/tutor";
 const Profile = () => {
   const { user } = useUser(); // Assuming user context provides user data
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [tutors, setTutors] = useState<ITutor>();
   const tEmail: any = (user?.email)
   useEffect(() => {
@@ -78,8 +78,8 @@ const Profile = () => {
           router.push(
             `/tutor/manageProfile/updateProfile/${tutors?.email}`
           )
-        } disabled={loading}>
-          {loading ? "Updating..." : "Update Profile"}
+        } >
+          Update Profile
         </Button>
       </div>
     </div>

@@ -5,7 +5,7 @@ import TutorCard from "./Tutorcard";
 
 
 const AllTutors = ({ tutors }: any) => {
-  console.log(tutors)
+  // console.log(tutors)
   return (
     <div className="flex gap-8 my-10">
       <div className="w-full max-w-sm">

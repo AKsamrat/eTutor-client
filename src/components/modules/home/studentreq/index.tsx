@@ -33,7 +33,8 @@ const StudentSteps: React.FC = () => {
       </h2>
 
       <div className="relative w-full max-w-4xl ">
-        {steps.map((step, index) => (
+        {steps?.map((step, index) => (
+
           <div
             key={index}
             className={`relative flex items-center p-4 bg-white rounded-lg  mb-8 w-3/6 border-[2px] border-green-200 shadow-xl shadow-slate-400 hover:shadow-lg transition-all duration-300
@@ -42,6 +43,7 @@ const StudentSteps: React.FC = () => {
           >
             {/* Icon */}
             <div className="text-3xl mr-4">{step.icon}</div>
+
 
             {/* Content */}
             <div>

@@ -61,14 +61,14 @@ export const updateProfile = async (data: ITutor, id: string) => {
 export const getAllTutor = async (page?: string, limit?: string, query?: { [key: string]: string | string[] | undefined }) => {
   try {
 
+
     const params = new URLSearchParams();
     if (query?.price) {
       params.append("minPrice", "0")
-      params.append("maxPrice", query?.price.toString())
+      params.append("maxPrice", query?.price?.toString())
+      console.log("69", params)
     }
-    if (query?.brand) {
-      params.append("brands", query?.brand.toString())
-    }
+
     if (query?.availability) {
       params.append("availability", query?.availability.toString())
     }
@@ -79,7 +79,7 @@ export const getAllTutor = async (page?: string, limit?: string, query?: { [key:
       `${process.env.NEXT_PUBLIC_BASE_API}/tutors?page=${page}&limit=${limit}&${params}`,
       {
         next: {
-          tags: ["TUTOR"],
+          tags: ["TUTORS"],
         },
       }
     );

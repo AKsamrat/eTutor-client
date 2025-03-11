@@ -42,8 +42,8 @@ export default function Navbar() {
 
   ];
   return (
-    <header className="border-b bg-background w-full sticky top-0 z-10">
-      <div className="container flex justify-between items-center mx-auto h-16 px-5">
+    <header className="border-b bg-[#D5F7E7] w-full sticky top-0 z-10">
+      <div className="container max-w-7xl flex justify-between items-center mx-auto h-16 px-5">
         <Link href="/">
           <h1 className="text-2xl font-black flex items-center">
 
@@ -93,7 +93,27 @@ export default function Navbar() {
                   <DropdownMenuItem>
                     <Link href={`/${user?.role}/dashboard`}>Dashboard</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>My Shop</DropdownMenuItem>
+                  <DropdownMenuItem>
+
+                    <div className=" md:hidden ">
+                      {navLinks.map(({ href, label }) => (
+                        <DropdownMenuItem key={href}>
+
+                          <Link
+
+                            href={href}
+                            className={`${pathname === href
+                              ? "text-[#139460] font-bold"
+                              : "text-gray-700 hover:text-6eal-700"
+                              }`}
+                          >
+                            {label}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+
+                    </div>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="bg-[#139460] cursor-pointer"

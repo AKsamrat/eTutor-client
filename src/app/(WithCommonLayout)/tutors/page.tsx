@@ -10,7 +10,7 @@ const TutorPage = async ({
 }) => {
   const query = await searchParams;
   const { data: tutors } = await getAllTutor(undefined, undefined, query);
-  console.log(tutors);
+  // console.log(tutors);
 
   return (
     <div className="max-w-7xl mx-auto">

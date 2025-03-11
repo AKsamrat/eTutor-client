@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+
 import { MapPin, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -19,12 +20,15 @@ interface TutorDetailsProps {
     pic: string;
     preferredClass: string;
     preferredArea: string;
+    averageRating?: number;
+    ratingCount?: number;
 
   };
 }
 
 const TutorDetails: React.FC<TutorDetailsProps> = ({ tutor }) => {
   const router = useRouter()
+
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 md:p-10">
       {/* Header Section */}
@@ -53,24 +57,28 @@ const TutorDetails: React.FC<TutorDetailsProps> = ({ tutor }) => {
         <p className="text-gray-700 text-sm md:text-base">{tutor?.bio}</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
           <p><strong>Subject:</strong> {tutor?.subject}</p>
-          <p><strong>Hourly Rate:</strong> ${tutor?.hourlyRate}/hr</p>
+          <p><strong>Monthly Rate:</strong> ${tutor?.hourlyRate}/hr</p>
           <p><strong>Availability:</strong> {tutor?.availability}</p>
           <div className="flex items-center">
-            <strong>Reviews:</strong>
+            <strong>Avg.Rating:</strong>
             <Star size={16} className="text-yellow-500 ml-2" />
-            <span className="ml-1">{tutor?.review} Stars</span>
+            <span className="ml-1">{tutor?.averageRating} Stars</span>
+            <span className="text-xs text-gray-500">({tutor?.ratingCount} Reviews)</span>
           </div>
+
           <p><strong>Preferred Class:</strong> {tutor?.preferredClass}</p>
           <p><strong>Preferred Area:</strong> {tutor?.preferredArea}</p>
         </div>
       </div>
 
       {/* Buttons */}
-      <div className="mt-6 flex flex-col md:flex-row gap-4">
-        <Button className="w-full md:w-1/2 bg-blue-600 hover:bg-blue-700 text-white">
+      <div className="mt-6 flex flex-col md:flex-row justify-center gap-4">
+        {/* <Button className="w-full md:w-1/2 bg-blue-600 hover:bg-blue-700 text-white">
           📞 Contact
-        </Button>
-        <Button onClick={() => router.push(`/tutors/booking/${tutor?.email}`)} className="w-full md:w-1/2 bg-green-600 hover:bg-green-700 text-white">
+        </Button> */}
+        <Button onClick={() => router.push(`/tutors/booking/${tutor?.email}`)} className="w-full md:w-1/2 bg-green-600 hover:bg-green-700 text-white"
+
+        >
           📅 Booking Request
         </Button>
       </div>

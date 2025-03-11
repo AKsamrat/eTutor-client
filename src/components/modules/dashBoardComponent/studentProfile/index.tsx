@@ -11,7 +11,7 @@ import { getSingleStudent } from "@/services/student";
 const StuProfile = () => {
   const { user } = useUser(); // Assuming user context provides user data
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+
   const [student, setStudent] = useState<ITutor>();
   const tEmail: any = (user?.email)
   useEffect(() => {
@@ -26,7 +26,7 @@ const StuProfile = () => {
 
     fetchData(tEmail);
   }, []);
-  console.log(student)
+  // console.log(student)
 
 
   if (!user) {
@@ -67,8 +67,8 @@ const StuProfile = () => {
           router.push(
             `/student/manageProfile/updateProfile/${student?.email}`
           )
-        } disabled={loading}>
-          {loading ? "Updating..." : "Update Profile"}
+        } >
+          Update Profile
         </Button>
       </div>
     </div>
