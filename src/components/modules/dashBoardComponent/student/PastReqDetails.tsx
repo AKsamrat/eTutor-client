@@ -2,6 +2,7 @@
 import { addProduct } from "@/redux/features/cartSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IBooking } from "@/types/booking";
+import { toast } from "sonner";
 // import { useRouter } from "next/navigation";
 
 
@@ -12,11 +13,11 @@ const PastReqDetails = ({ request }: { request: IBooking }) => {
   console.log(request)
   const handleApprove = async (product) => {
     dispatch(addProduct(product))
+    toast.success("Added to cart successfully");
     try {
       // const res = await approveRequest(id)
       // console.log(res)
       // if (res.success) {
-      //   toast.success("Request Approved successfully");
       //   route.push("/booking/Request")
       // } else {
       //   toast.success("Request not approve successfully");
@@ -57,7 +58,7 @@ const PastReqDetails = ({ request }: { request: IBooking }) => {
             aria-hidden="true"
             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
           ></span>
-          <span className="relative"> Payment</span>
+          <span className="relative"> Add to Cart</span>
         </button>
       </td>
     </tr>
