@@ -58,37 +58,46 @@ export const updateProfile = async (data: ITutor, id: string) => {
 };
 
 // get all tutor
-export const getAllTutor = async (page?: string, limit?: string, query?: { [key: string]: string | string[] | undefined }) => {
+export const getAllTutor = async (
+  page?: string | number,
+  limit?: string | number,
+  query?: { [key: string]: string | string[] | undefined }
+) => {
   try {
-
-
     const params = new URLSearchParams();
+
+    // Add price filter
     if (query?.price) {
-      params.append("minPrice", "0")
-      params.append("maxPrice", query?.price?.toString())
-      console.log("69", params)
+      params.append("minPrice", "0");
+      params.append("maxPrice", query.price.toString());
     }
 
+    // Add availability filter
     if (query?.availability) {
-      params.append("availability", query?.availability.toString())
+      params.append("availability", query.availability.toString());
     }
+
+    // Add review filter
     if (query?.review) {
-      params.append("review", query?.review.toString())
+      params.append("review", query.review.toString());
     }
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/tutors?page=${page}&limit=${limit}&${params}`,
-      {
-        next: {
-          tags: ["TUTORS"],
-        },
-      }
-    );
+
+    // Construct URL with string conversion
+    const url = `${process.env.NEXT_PUBLIC_BASE_API}/tutors?page=${page?.toString() || "1"}&limit=${limit?.toString() || "10"}&${params}`;
+
+    const res = await fetch(url, {
+      next: {
+        tags: ["TUTORS"],
+      },
+    });
+
     const data = await res.json();
     return data;
   } catch (error: any) {
     return Error(error.message);
   }
 };
+
 
 export const approveRequest = async (id: string) => {
   console.log("Sending update for ID:", id);

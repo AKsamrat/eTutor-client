@@ -82,8 +82,8 @@ const Banner = () => {
           className="mySwiper"
         >
           <SwiperSlide>
-            <div className="carousel-item relative w-full style lg:h-[550px] mt-8">
-              <Image src={img2} height={500} alt='banner' className="w-full rounded-xl overflow-hidden " />
+            <div className="carousel-item relative w-full style lg:h-[530px] mt-8">
+              <Image src={img2} height={500} alt='banner' className="w-full rounded-xl overflow-hidden h-[530px]" />
               <div className="absolute rounded-xl flex  items-center h-full left-0 top-0 bg-gradient-to-r from-[#151515] from-10% via-[#151515] via-10%  to-[rgba(21, 21, 21, 0)]   ">
                 <div className=" text-white space-y-10 ml-6 lg:ml-20 ">
                   <h2 className="text-2xl lg:text-5xl font-bold">

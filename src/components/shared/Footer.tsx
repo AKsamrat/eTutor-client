@@ -2,8 +2,8 @@ import Image from 'next/image';
 import logo2 from '../../app/assets/etutor_logo2.png'
 const Footer = () => {
   return (
-    <footer className="px-4 divide-y bg-[#D5F7E7] dark:text-gray-800 mt-10 mx-auto ">
-      <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0 ">
+    <footer className="px-4 divide-y bg-[#b6f4c93b] dark:text-gray-800 pt-10 mx-auto ">
+      <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0 pl-10 ">
         <div className="flex items-center justify-center pl-8 w-48 h-32 rounded-full dark:bg-violet-600">
           <Image
             src={logo2}

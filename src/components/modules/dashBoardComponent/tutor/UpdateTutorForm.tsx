@@ -2,7 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { cities } from "@/constants/cities";
 import { updateProfile } from "@/services/tutor";
 import { ITutor } from "@/types/tutor";
 import { useRouter } from "next/navigation";
@@ -19,6 +21,9 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
       // email: tutor?.email || "",
       bio: tutor?.bio || "",
       pic: tutor?.pic || "",
+      gender: tutor?.gender || "",
+      district: tutor?.district || "",
+      tutionType: tutor?.tutionType || "",
       hourlyRate: tutor?.hourlyRate || "",
       institute: tutor?.institute || "",
       location: tutor?.location || "",
@@ -170,6 +175,85 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gender</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select gender" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Tution Type Select */}
+            <FormField
+              control={form.control}
+              name="tutionType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tuition Type</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select tuition type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="home">Home</SelectItem>
+                        <SelectItem value="online">Online</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="district"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>District</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select district" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {cities.map((district) => (
+                          <SelectItem key={district} value={district}>
+                            {district}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+
           </div>
 
           <div className="my-5">
@@ -227,7 +311,7 @@ const UpdateTutorForm = ({ tutor }: { tutor: ITutor }) => {
           </div>
 
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Updating Product....." : "Update Product"}
+            {isSubmitting ? "Updating Product....." : "Update Profile"}
           </Button>
         </form>
       </Form>

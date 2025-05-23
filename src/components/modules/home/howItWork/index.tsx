@@ -69,7 +69,7 @@ const HowItWorks = () => {
 
             {/* Step Box (Zig-Zag Layout) */}
             <div
-              className="flex justify-between  items-center bg-white shadow-xl rounded-lg shadow-slate-400 p-6 gap-4 hover:shadow-lg transition-all duration-300 w-full"
+              className="flex flex-col md:flex-row justify-between  items-center bg-white shadow-xl rounded-lg shadow-slate-400 p-6 gap-4 hover:shadow-lg transition-all duration-300 w-full"
             >
               {/* If index is even, icon is at right; if odd, icon is at left */}
               {index % 2 !== 0 && (

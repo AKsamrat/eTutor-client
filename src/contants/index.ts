@@ -2,7 +2,12 @@ export const protectedRoutes = [
   "/login",
   "/create-shop",
   "/admin",
-  "/admin/:page",
+  "/tutor/bookingRequest",
+  "/tutor/manageProfile",
+  "/tutor/earning",
+  "/tutor/subjectManagement",
   "/user",
-  "/user/:page",
+  "/student/profile",
+  "/tutor/dashboard",
+  "/user/dashboard"
 ]

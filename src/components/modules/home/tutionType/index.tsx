@@ -34,7 +34,7 @@ const TuitionTypes = () => {
         Find the Best Tuition Type which suits you most
       </p>
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto ">
         {tuitionTypes.map((type, index) => (
           <div
             key={index}

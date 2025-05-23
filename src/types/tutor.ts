@@ -6,6 +6,9 @@ export interface ITutor {
   role?: string;
   email?: string;
   institute?: string;
+  tutionType?: string;
+  gender?: string;
+  district?: string;
   preferredClass?: string;
   preferredArea?: string;
   location?: string;

@@ -1,4 +1,5 @@
 export interface IStudent {
+  userId?: string;
   _id?: string;
   bio?: string;
   pic?: string;

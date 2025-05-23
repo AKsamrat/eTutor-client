@@ -15,7 +15,7 @@ const ReqDetails = ({ request }: { request: IBooking }) => {
       console.log(res)
       if (res.success) {
         toast.success("Request Approved successfully");
-        route.push("/booking/Request")
+        route.push("/tutor/bookingRequest")
       } else {
         toast.success("Request not approve successfully");
 
@@ -31,7 +31,7 @@ const ReqDetails = ({ request }: { request: IBooking }) => {
       console.log(res)
       if (res.success) {
         toast.success("Request canceled successfully");
-        route.push("/booking/Request")
+        route.push("/tutor/bookingRequest")
       } else {
         toast.success("Request not canceled successfully");
 

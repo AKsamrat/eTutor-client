@@ -41,7 +41,7 @@ const TestimonialSlider = () => {
       <p className="text-gray-600 text-center mb-10">
         See what our satisfied parents and students are saying about eTutor.
       </p>
-      <div className="max-w-5xl mx-auto py-10">
+      <div className="max-w-6xl mx-auto py-10">
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={30}

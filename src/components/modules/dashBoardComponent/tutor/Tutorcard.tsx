@@ -19,13 +19,13 @@ interface TutorCardProps {
 const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
   const router = useRouter();
   return (
-    <div className="border rounded-2xl shadow-md p-4 w-72 text-center bg-white">
+    <div className="border rounded-2xl shadow-md p-4 w-[270] text-center bg-white">
       {/* Profile Image */}
       <div className="flex justify-center h-52 ">
         <Image
           src={tutor?.pic}
           alt={tutor?.name}
-          width={200}
+          width={220}
           height={300}
           className="rounded-lg object-cover height-full "
         />
